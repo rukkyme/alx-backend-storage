@@ -1,12 +1,14 @@
--- SQL script that creates a trigger that decreases quantity of an item
+-- SQL script that creates a trigger that decreases 
+-- quantity of an item
 DELIMITER //
-CREATE TRIGGER after_insert_order
-AFTER INSERT ON orders FOR EACH ROW
+CREATE TRIGGER dq
+AFTER INSERT
+ON `orders`
+FOR EACH ROW
 BEGIN
-    -- Decrease the quantity of the corresponding item in the items table
     UPDATE items
-    SET quantity = quantity - NEW.quantity
-    WHERE id = NEW.item_id;
+    SET quantity = quantity - NEW.number
+    WHERE NEW.item_name = items.name;
 END;
 //
 DELIMITER ;
